@@ -1,5 +1,6 @@
 import { argv } from "node:process";
 import { repl } from "./repl.js";
+import { getTerminalCommands } from "./terminal_commands.js";
 
 function main() {
 	parse_argv();
@@ -12,6 +13,8 @@ function parse_argv() {
 		print_help();
 		return;
 	}
+
+	const terminalCommands = getTerminalCommands();
 
 	switch(command) {
 		case "help":
