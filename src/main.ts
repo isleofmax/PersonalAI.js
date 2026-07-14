@@ -24,8 +24,8 @@ function parse_argv() {
 			repl();
 			break;
 		default:
-			console.log("Unknown command");
-			print_help();			
+			repl();
+			break;
 	}	
 }
 
