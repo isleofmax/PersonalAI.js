@@ -1,36 +1,35 @@
 import { argv } from "node:process";
-import { repl } from "./repl.js";
-import { getTerminalCommands } from "./terminal_commands.js";
+import { startRepl } from "./repl.js";
+import { initState } from "./init_state.js";
+import { getTerminalCommands, TerminalCommand } from "./terminal_commands.js";
 
 function main() {
 	parse_argv();
 }
 
 function parse_argv() {
-	const command = argv[0].toLocaleLowerCase();
+	let command = argv[0].toLocaleLowerCase();
 	if (command === undefined) {
 		console.log("Usage personalai <command>:")
-		print_help();
+		command = "help";
 		return;
 	}
 
-	const terminalCommands = getTerminalCommands();
+	const terminalCommands: Record<string, TerminalCommand> = getTerminalCommands();
 
 	switch(command) {
 		case "help":
-			print_help();
+			terminalCommands[command].callback();
 			break;
 		case "cli":
-			repl();
+			initState();
+			startRepl();
 			break;
 		default:
-			repl();
+			command = "help";
+			terminalCommands[command].callback();
 			break;
 	}	
-}
-
-function print_help() {
-
 }
 
 main();
