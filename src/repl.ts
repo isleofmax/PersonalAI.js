@@ -14,25 +14,26 @@ export function repl() {
 
     rl.prompt();
     rl.on("line", (line) => {
-        const words = get_command(line);
+        const words = getWords(line);
         if (words.length === 0) {
             rl.prompt();
             return;
         }
 
-        const command = words[0];
+        const commandName = getCommand(words[0]);
+        if (commandName === undefined) {
+            console.log("Unknown command");
+            rl.prompt();
+            return;
+        }
+
         const replCommands: Record<string, ReplCommand> = getReplCommands();
 
         try {
-            if (command.substring(0,1) === "/") {
-                const commandName = command.substring(1);
-                if (replCommands[commandName]) {
-                    replCommands[commandName].callback();
-                } else {
-                    console.log("unknow command");
-                }
+            if (replCommands[commandName]) {
+                replCommands[commandName].callback();
             } else {
-                console.log("unknow command");
+                console.log("Unknown command");
             }
         } catch (error) {
             if (error instanceof Error) {
@@ -46,6 +47,14 @@ export function repl() {
     });
 }
 
-function get_command(line: string) {
+function getWords(line: string) {
     return line.trim().toLowerCase().split(" ").filter((word) => word !== "");
+}
+
+function getCommand(word: string): string | undefined {
+    if (word.substring(0,1) === "/") {
+        return word.substring(1);
+    }
+
+    return undefined;
 }
