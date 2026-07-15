@@ -1,11 +1,10 @@
-import { stdin, stdout } from "node:process";
 import { createInterface } from "node:readline";
 import { getReplCommands, ReplCommand } from "./repl_commands.js";
 
 export function startRepl() {
     const rl = createInterface({
-        input: stdin,
-        output: stdout,
+        input: process.stdin,
+        output: process.stdout,
         prompt: "personal-ai> "
     });
 

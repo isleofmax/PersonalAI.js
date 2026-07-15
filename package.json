@@ -8,13 +8,16 @@
   "main": "dist/main.js",
   "scripts": {
     "test": "vitest --run",
-	"build": "npx tsc",
-	"start": "node ./dist/main.js",
-	"dev": "npx tsc && node ./dist/main.js"
+    "build": "npx tsc",
+    "start": "node ./dist/main.js",
+    "dev": "npx tsc && node ./dist/main.js"
   },
   "devDependencies": {
     "@types/node": "^26.1.1",
     "typescript": "^7.0.2",
     "vitest": "^4.1.10"
+  },
+  "dependencies": {
+    "commander": "^15.0.0"
   }
 }

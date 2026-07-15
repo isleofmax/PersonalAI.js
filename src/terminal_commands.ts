@@ -1,17 +1,14 @@
-import { terminalCommandHelp, terminalCommandDesc } from "./tcommand_help.js";
+import { Command } from "commander";
+import { tcommandRepl } from "./tcommand_repl.js";
 
-export function getTerminalCommands() {
-    return {
-        help: {
-            name: "help",
-            description: terminalCommandDesc,
-            callback: terminalCommandHelp
-        },
-    };
+export function getTerminalCommands(): Command {
+    const program = new Command();
+    program
+        .command("repl")
+        .description("Access the repl")
+        .action((str: string, options: Command) => {
+            tcommandRepl();
+        });
+
+    return program;
 }
-
-export type TerminalCommand = {
-    name: string;
-    description: () => string;
-    callback: () => void;
-};
