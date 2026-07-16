@@ -6,9 +6,7 @@ export function getTerminalCommands(): Command {
     program
         .command("repl")
         .description("Access the repl")
-        .action((str: string, options: Command) => {
-            tcommandRepl();
-        });
+        .action(tcommandRepl);
 
     return program;
 }

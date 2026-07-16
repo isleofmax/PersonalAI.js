@@ -1,7 +1,18 @@
 import { createInterface } from "node:readline";
 import { getReplCommands, ReplCommand } from "./repl_commands.js";
+import { startLlama } from "./llama.js";
 
 export function startRepl() {
+    console.log("starting Llama.cpp...");
+    try {
+        startLlama();
+    } catch (error) {
+        if (error instanceof Error) {
+            console.log(error.message);
+            return;
+        }
+    }
+
     const rl = createInterface({
         input: process.stdin,
         output: process.stdout,

@@ -7,6 +7,7 @@ function main() {
 }
 
 function parse_argv() {
+	initState();
 	getTerminalCommands().parse();
 }
 
