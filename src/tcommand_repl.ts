@@ -1,6 +1,6 @@
 import { startRepl } from "./repl.js";
-import { Command } from "commander";
+import { Configuration } from "./config.js";
 
-export function tcommandRepl(str: string, options: Command) {
-    startRepl();
+export function tcommandRepl(config: Configuration) {
+    startRepl(config);
 }

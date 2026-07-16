@@ -1,8 +1,9 @@
 import { createInterface } from "node:readline";
 import { getReplCommands, ReplCommand } from "./repl_commands.js";
+import { Configuration } from "./config.js";
 import { startLlama } from "./llama.js";
 
-export function startRepl() {
+export function startRepl(config: Configuration) {
     console.log("starting Llama.cpp...");
     try {
         startLlama();

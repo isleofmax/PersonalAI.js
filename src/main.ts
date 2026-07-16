@@ -1,5 +1,4 @@
-import { Command } from "commander";
-import { initState } from "./init_state.js";
+import { initConfig, Configuration } from "./config.js";
 import { getTerminalCommands, } from "./terminal_commands.js";
 
 function main() {
@@ -7,8 +6,8 @@ function main() {
 }
 
 function parse_argv() {
-	initState();
-	getTerminalCommands().parse();
+	const config = initConfig();
+	getTerminalCommands(config).parse();
 }
 
 main();
