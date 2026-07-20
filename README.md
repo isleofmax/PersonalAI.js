@@ -8,6 +8,11 @@ Personal AI has 2 interfaces, console and web.
 - [llama-cpp](https://github.com/ggml-org/llama.cpp/releases)
 - [nodejs](https://nodejs.org/en) version >= 24.18.0
 
+## Libraries used
+- commander  15.0.0
+- @huggingface/hub 2.13.3
+
+
 ### Commands
 - help: view help
 - server: launch the web interface
