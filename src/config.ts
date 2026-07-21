@@ -4,29 +4,37 @@
  */
 
 import { homedir } from "node:os";
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import fs from "node:fs";
+import path from "node:path";
 
-function writeDefaultConfig(configFile: string) {
-    const configurationDefaultValues = {
-        llamaExe: "",
+export function getDefaultConfig(configFile: string) {
+    const llmDir = path.dirname(configFile);
+    return {
         hugKey: "",
-        llamaAddr: "",
-        llamaPort: "",
-        llmDir: ""
-    };
+        llamaAddr: "http://127.0.0.1",
+        llamaPort: "8080",
+        llmDir: llmDir,
+    } as Configuration;
+}
 
+export function writeDefaultConfig(configFile: string) {
+    const llmDir = path.dirname(configFile);
+    if (!fs.existsSync(llmDir)) {
+        fs.mkdirSync(llmDir);
+    }
+
+    const configurationDefaultValues = getDefaultConfig(configFile);
     const data = JSON.stringify(configurationDefaultValues);
     try {
-        writeFileSync(configFile, data);
+        fs.writeFileSync(configFile, data);
     } catch (error) {
         throw Error("Cannot create configuration file");
     }
     return configurationDefaultValues;
 }
 
-function createConfigurationType(parsedData: any) {
+export function readConfigurationData(parsedData: any) {
     const configurationFileObj = {
-        llamaExe: parsedData.llamaExe,
         hugKey: parsedData.hugKey,
         llamaAddr: parsedData.llamaAddr,
         llamaPort: parsedData.llamaPort,
@@ -41,10 +49,10 @@ export function initConfig(): Configuration | undefined {
     const home = homedir();
     const configFile = `${home}/.personaAI`;
     let configData: Configuration; 
-    if (existsSync(configFile)) {
-        const data = readFileSync(configFile, "utf-8");
+    if (fs.existsSync(configFile)) {
+        const data = fs.readFileSync(configFile, "utf-8");
         const parsedData = JSON.parse(data);
-        configData = createConfigurationType(parsedData);
+        configData = readConfigurationData(parsedData);
     }
 
     try {
@@ -59,7 +67,6 @@ export function initConfig(): Configuration | undefined {
 }
 
 export type Configuration = {
-    llamaExe: string;       //path to llama.cpp executable
     hugKey: string;         //HuggingFace Api Key
     llamaAddr: string;      //ip address of llama.cpp server
     llamaPort: string;      //port of llama.cpp server
