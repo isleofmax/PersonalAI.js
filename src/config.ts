@@ -20,11 +20,11 @@ export function getDefaultConfig(configFile: string) {
 export function writeDefaultConfig(configFile: string) {
     const llmDir = path.dirname(configFile);
     if (!fs.existsSync(llmDir)) {
-        fs.mkdirSync(llmDir);
+        fs.mkdirSync(llmDir, { recursive: true });
     }
 
     const configurationDefaultValues = getDefaultConfig(configFile);
-    const data = JSON.stringify(configurationDefaultValues);
+    const data = JSON.stringify(configurationDefaultValues, undefined, "  ");
     try {
         fs.writeFileSync(configFile, data);
     } catch (error) {
