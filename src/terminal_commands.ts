@@ -13,7 +13,7 @@ export function getTerminalCommands(config: Configuration): Command {
         });
 
     program
-        .command("download <name of LLM>")
+        .command("download <name_of_LLM>")
         .description("Download the LLM passed by argument")
         .action(() => {
             tcommandDownload(config);
